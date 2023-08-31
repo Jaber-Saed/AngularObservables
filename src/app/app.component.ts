@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
+import { Observable, filter, from, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -50,23 +50,30 @@ export class AppComponent implements OnInit {
 
   //create Observable using from operator
   myObservable4 = from(this.array1,);
-//print the array parameter on by one & only take one argument
+  //print the array parameter on by one & only take one argument
 
+  transformedObs = this.myObservable4.pipe(map((val) => {
+    return val * 5
+  }))
 
-  ngOnInit(): void { }
+  filteredObs = this.transformedObs.pipe(filter((val) => {
+    return val >= 30 ;
+  }))
 
-  ObservablesRun() {
-    this.myObservable4.subscribe(
-      (val: any) => {
-        console.log(`Next value: ${val}`);
-      },
-      (error: { message: any; }) => {
-        alert(error.message);
-      },
-      () => {
-        alert('Observable completed.')
-      }
-    )
+ngOnInit(): void {}
 
-  }
+ObservablesRun() {
+  this.myObservable4.subscribe(
+    (val: any) => {
+      console.log(`Next value: ${val}`);
+    },
+    (error: { message: any; }) => {
+      alert(error.message);
+    },
+    () => {
+      alert('Observable completed.')
+    }
+  )
+
+}
 }
