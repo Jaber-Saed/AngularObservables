@@ -29,15 +29,24 @@ export class AppComponent implements OnInit {
 
   })
 
+  //Anthour way to creait Observable by method
+
+  myObservable2 =  Observable.create((observer: { next: (arg0: string) => void; }) => {
+    setTimeout(() => { observer.next("A") }, 1000)
+    setTimeout(() => { observer.next("B") }, 2000)
+    setTimeout(() => { observer.next("C") }, 3000)
+    setTimeout(() => { observer.next("D") }, 4000)
+    setTimeout(() => { observer.next("E") }, 5000)
+  });
 
   ngOnInit(): void { }
 
   ObservablesRun() {
-    this.myObservable.subscribe(
-      (val) => {
+    this.myObservable2.subscribe(
+      (val: any) => {
         console.log(`Next value: ${val}`);
       },
-      (error) => {
+      (error: { message: any; }) => {
         alert(error.message);
       },
       () => {
