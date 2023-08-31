@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +12,10 @@ export class AppComponent implements OnInit {
 
   title = 'AngularObservables';
   errorInsert = new Error(`Bug 404 !`)
+
+  //credit Observable as constructor
   myObservable = new Observable((observer) => {
-
     console.log('Observable Starts');
-
-
     setTimeout(() => { observer.next("1") }, 1000)
     setTimeout(() => { observer.next("2") }, 2000)
     setTimeout(() => { observer.next("3") }, 3000)
@@ -29,9 +28,8 @@ export class AppComponent implements OnInit {
 
   })
 
-  //Anthour way to creait Observable by method
-
-  myObservable2 =  Observable.create((observer: { next: (arg0: string) => void; }) => {
+  //anther way to create Observable by method
+  myObservable2 = Observable.create((observer: { next: (arg0: string) => void; }) => {
     setTimeout(() => { observer.next("A") }, 1000)
     setTimeout(() => { observer.next("B") }, 2000)
     setTimeout(() => { observer.next("C") }, 3000)
@@ -39,10 +37,26 @@ export class AppComponent implements OnInit {
     setTimeout(() => { observer.next("E") }, 5000)
   });
 
+
+  //create Observable using of operator
+
+  array1 = [1, 2, 3, 4, 5];
+  array2 = ['A', 'B', 'C']
+
+  myObservable3 = of(this.array1, this.array2, 14, 3, "Hello");
+  //print the array parmeater all togather
+
+
+
+  //create Observable using from operator
+  myObservable4 = from(this.array1,);
+//print the array parameter on by one & only take one argument
+
+
   ngOnInit(): void { }
 
   ObservablesRun() {
-    this.myObservable2.subscribe(
+    this.myObservable4.subscribe(
       (val: any) => {
         console.log(`Next value: ${val}`);
       },
